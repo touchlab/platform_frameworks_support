@@ -17,13 +17,9 @@
 package android.arch.lifecycle;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Application;
 import android.arch.lifecycle.ViewModelProvider.Factory;
-import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 
 import java.lang.reflect.InvocationTargetException;
 
@@ -39,86 +35,6 @@ public class ViewModelProviders {
         if (sDefaultFactory == null) {
             sDefaultFactory = new DefaultFactory(application);
         }
-    }
-
-    private static Application checkApplication(Activity activity) {
-        Application application = activity.getApplication();
-        if (application == null) {
-            throw new IllegalStateException("Your activity/fragment is not yet attached to "
-                    + "Application. You can't request ViewModel before onCreate call.");
-        }
-        return application;
-    }
-
-    private static Activity checkActivity(Fragment fragment) {
-        Activity activity = fragment.getActivity();
-        if (activity == null) {
-            throw new IllegalStateException("Can't create ViewModelProvider for detached fragment");
-        }
-        return activity;
-    }
-
-    /**
-     * Creates a {@link ViewModelProvider}, which retains ViewModels while a scope of given
-     * {@code fragment} is alive. More detailed explanation is in {@link ViewModel}.
-     * <p>
-     * It uses {@link DefaultFactory} to instantiate new ViewModels.
-     *
-     * @param fragment a fragment, in whose scope ViewModels should be retained
-     * @return a ViewModelProvider instance
-     */
-    @MainThread
-    public static ViewModelProvider of(@NonNull Fragment fragment) {
-        initializeFactoryIfNeeded(checkApplication(checkActivity(fragment)));
-        return new ViewModelProvider(ViewModelStores.of(fragment), sDefaultFactory);
-    }
-
-    /**
-     * Creates a {@link ViewModelProvider}, which retains ViewModels while a scope of given Activity
-     * is alive. More detailed explanation is in {@link ViewModel}.
-     * <p>
-     * It uses {@link DefaultFactory} to instantiate new ViewModels.
-     *
-     * @param activity an activity, in whose scope ViewModels should be retained
-     * @return a ViewModelProvider instance
-     */
-    @MainThread
-    public static ViewModelProvider of(@NonNull FragmentActivity activity) {
-        initializeFactoryIfNeeded(checkApplication(activity));
-        return new ViewModelProvider(ViewModelStores.of(activity), sDefaultFactory);
-    }
-
-    /**
-     * Creates a {@link ViewModelProvider}, which retains ViewModels while a scope of given
-     * {@code fragment} is alive. More detailed explanation is in {@link ViewModel}.
-     * <p>
-     * It uses the given {@link Factory} to instantiate new ViewModels.
-     *
-     * @param fragment a fragment, in whose scope ViewModels should be retained
-     * @param factory  a {@code Factory} to instantiate new ViewModels
-     * @return a ViewModelProvider instance
-     */
-    @MainThread
-    public static ViewModelProvider of(@NonNull Fragment fragment, @NonNull Factory factory) {
-        checkApplication(checkActivity(fragment));
-        return new ViewModelProvider(ViewModelStores.of(fragment), factory);
-    }
-
-    /**
-     * Creates a {@link ViewModelProvider}, which retains ViewModels while a scope of given Activity
-     * is alive. More detailed explanation is in {@link ViewModel}.
-     * <p>
-     * It uses the given {@link Factory} to instantiate new ViewModels.
-     *
-     * @param activity an activity, in whose scope ViewModels should be retained
-     * @param factory  a {@code Factory} to instantiate new ViewModels
-     * @return a ViewModelProvider instance
-     */
-    @MainThread
-    public static ViewModelProvider of(@NonNull FragmentActivity activity,
-            @NonNull Factory factory) {
-        checkApplication(activity);
-        return new ViewModelProvider(ViewModelStores.of(activity), factory);
     }
 
     /**

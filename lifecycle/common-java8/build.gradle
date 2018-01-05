@@ -14,6 +14,35 @@
  * limitations under the License.
  */
 
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+apply plugin: 'co.doppl.gradle'
+apply plugin: 'com.jfrog.bintray'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile "co.doppl.lib:androidbase:$project.ext.dopplCoreVersionJava"
+    doppl "co.doppl.lib:androidbase:$project.ext.dopplCoreVersionDoppl"
+
+    testCompile "junit:junit:$doppl_junit_java"
+    testDoppl "co.doppl.junit:junit:$doppl_junit_doppl"
+    testCompile "org.mockito:mockito-core:$doppl_mockito_java"
+    testDoppl "co.doppl.org.mockito:mockito-core:$doppl_mockito_doppl"
+
+    compile project(":lifecycle:common")
+    doppl project(":lifecycle:common")
+//    doppl "$archgroup_LIFECYCLE:common:$doppl_arch_lifecycle_doppl"
+}
+
+group = archgroup_LIFECYCLE
+version = doppl_arch_lifecycle_doppl
+
+apply from: "$dopplSharedScriptHome/doppllibpublish.gradle"
+apply from: "$dopplSharedScriptHome/bintray.gradle"
+
+/*
 import android.support.LibraryGroups
 import android.support.LibraryVersions;
 import android.support.SupportLibraryExtension;
@@ -41,3 +70,4 @@ supportLibrary {
     url = SupportLibraryExtension.ARCHITECTURE_URL
     java8Library = true
 }
+*/

@@ -345,11 +345,7 @@ public class TableInfo {
             if (o == null || getClass() != o.getClass()) return false;
 
             Column column = (Column) o;
-            if (Build.VERSION.SDK_INT >= 20) {
-                if (primaryKeyPosition != column.primaryKeyPosition) return false;
-            } else {
-                if (isPrimaryKey() != column.isPrimaryKey()) return false;
-            }
+            if (primaryKeyPosition != column.primaryKeyPosition) return false;
 
             if (!name.equals(column.name)) return false;
             //noinspection SimplifiableIfStatement

@@ -36,6 +36,7 @@ import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import co.touchlab.doppl.testing.MockGen;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,6 +44,17 @@ import org.junit.runners.JUnit4;
 import org.mockito.Matchers;
 
 @RunWith(JUnit4.class)
+@MockGen(classes =
+        {
+        "android.arch.lifecycle.Lifecycle",
+        "android.arch.lifecycle.LifecycleOwner",
+                "android.arch.lifecycle.ReflectiveGenericLifecycleObserverTest.ObserverWithPrivateMethod",
+                "android.arch.lifecycle.ReflectiveGenericLifecycleObserverTest.AllMethodsListener",
+                "android.arch.lifecycle.ReflectiveGenericLifecycleObserverTest.CreatedStateListener",
+                "android.arch.lifecycle.ReflectiveGenericLifecycleObserverTest.DerivedClass1",
+                "android.arch.lifecycle.ReflectiveGenericLifecycleObserverTest.DerivedClass2"
+        }
+)
 public class ReflectiveGenericLifecycleObserverTest {
     private LifecycleOwner mOwner;
     private Lifecycle mLifecycle;
@@ -101,7 +113,7 @@ public class ReflectiveGenericLifecycleObserverTest {
         verify(obj).onCreated(mOwner);
     }
 
-    private static class CreatedStateListener implements LifecycleObserver {
+    static class CreatedStateListener implements LifecycleObserver {
         @OnLifecycleEvent(ON_CREATE)
         void onCreated() {
 
@@ -150,7 +162,7 @@ public class ReflectiveGenericLifecycleObserverTest {
     }
 
 
-    private static class AllMethodsListener implements LifecycleObserver {
+     static class AllMethodsListener implements LifecycleObserver {
         @OnLifecycleEvent(ON_CREATE)
         void created() {}
 
@@ -191,15 +203,17 @@ public class ReflectiveGenericLifecycleObserverTest {
         }
     }
 
+    static class ObserverWithPrivateMethod implements LifecycleObserver {
+        boolean mCalled = false;
+        @OnLifecycleEvent(ON_START)
+        private void started() {
+            mCalled = true;
+        }
+    }
+
     @Test
     public void testPrivateObserverMethods() {
-        class ObserverWithPrivateMethod implements LifecycleObserver {
-            boolean mCalled = false;
-            @OnLifecycleEvent(ON_START)
-            private void started() {
-                mCalled = true;
-            }
-        }
+
 
         ObserverWithPrivateMethod obj = mock(ObserverWithPrivateMethod.class);
         ReflectiveGenericLifecycleObserver observer = new ReflectiveGenericLifecycleObserver(obj);
@@ -247,13 +261,13 @@ public class ReflectiveGenericLifecycleObserverTest {
         new ReflectiveGenericLifecycleObserver(observer);
     }
 
-    class BaseClass1 implements LifecycleObserver {
+    static class BaseClass1 implements LifecycleObserver {
         @OnLifecycleEvent(ON_START)
         void foo(LifecycleOwner owner) {
         }
     }
 
-    class DerivedClass1 extends BaseClass1 {
+    static class DerivedClass1 extends BaseClass1 {
         @OnLifecycleEvent(ON_STOP)
         void foo(LifecycleOwner owner) {
         }
@@ -264,13 +278,13 @@ public class ReflectiveGenericLifecycleObserverTest {
         new ReflectiveGenericLifecycleObserver(new DerivedClass1());
     }
 
-    class BaseClass2 implements LifecycleObserver {
+    static class BaseClass2 implements LifecycleObserver {
         @OnLifecycleEvent(ON_START)
         void foo(LifecycleOwner owner) {
         }
     }
 
-    class DerivedClass2 extends BaseClass1 {
+    static class DerivedClass2 extends BaseClass1 {
         @OnLifecycleEvent(ON_STOP)
         void foo() {
         }

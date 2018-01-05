@@ -14,14 +14,56 @@
  * limitations under the License.
  */
 
-import android.support.LibraryGroups
-import android.support.LibraryVersions;
-import android.support.SupportLibraryExtension;
+/*
+ * Copyright (C) 2017 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+apply plugin: 'co.doppl.gradle'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'net.ltgt.apt'
 
-plugins {
-    id("SupportJavaLibraryPlugin")
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+dependencies {
+    compile "co.doppl.lib:androidbase:$project.ext.dopplCoreVersionJava"
+    doppl "co.doppl.lib:androidbase:$project.ext.dopplCoreVersionDoppl"
+
+    testCompile "junit:junit:$doppl_junit_java"
+    testDoppl "co.doppl.junit:junit:$doppl_junit_doppl"
+    testCompile "org.mockito:mockito-core:$doppl_mockito_java"
+    testDoppl "co.doppl.org.mockito:mockito-core:$doppl_mockito_doppl"
+
+    testCompile "co.doppl.lib:androidbasetest:$project.ext.dopplCoreVersionJava"
+    testDoppl "co.doppl.lib:androidbasetest:$project.ext.dopplCoreVersionDoppl"
+
+    testApt "co.doppl.lib:testapt:$project.ext.dopplCoreVersionJava"
 }
 
+group = archgroup_LIFECYCLE
+version = doppl_arch_lifecycle_doppl
+
+apply from: "$dopplSharedScriptHome/doppllibpublish.gradle"
+apply from: "$dopplSharedScriptHome/bintray.gradle"
+
+dopplConfig{
+//    javaDebug true
+}
+
+/*
 dependencies {
     testCompile libs.junit
     testCompile libs.mockito_core
@@ -39,3 +81,4 @@ supportLibrary {
     description = "Android Lifecycle-Common"
     url = SupportLibraryExtension.ARCHITECTURE_URL
 }
+*/

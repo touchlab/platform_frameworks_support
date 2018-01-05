@@ -16,8 +16,6 @@
 
 package android.arch.lifecycle;
 
-import android.app.Service;
-import android.content.Intent;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 

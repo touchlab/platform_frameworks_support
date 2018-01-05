@@ -2,7 +2,10 @@ buildscript {
     def supportRootFolder = project.projectDir.getParentFile()
     repositories {
         maven {
-            url "${supportRootFolder}/../../prebuilts/tools/common/m2/repository"
+            url "/Volumes/android/WORKING_DIRECTORY/prebuilts/tools/common/m2/repository"
+            jcenter()
+            mavenCentral()
+            google()
         }
     }
 

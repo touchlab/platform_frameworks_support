@@ -275,18 +275,7 @@ public interface SupportSQLiteOpenHelper {
             }
             Log.w(TAG, "deleting the database file: " + fileName);
             try {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    SQLiteDatabase.deleteDatabase(new File(fileName));
-                } else {
-                    try {
-                        final boolean deleted = new File(fileName).delete();
-                        if (!deleted) {
-                            Log.e(TAG, "Could not delete the database file " + fileName);
-                        }
-                    } catch (Exception error) {
-                        Log.e(TAG, "error while deleting corrupted database file", error);
-                    }
-                }
+                SQLiteDatabase.deleteDatabase(new File(fileName));
             } catch (Exception e) {
             /* print warning and ignore exception */
                 Log.w(TAG, "delete failed: ", e);

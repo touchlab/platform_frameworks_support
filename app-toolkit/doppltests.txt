@@ -1,0 +1,13 @@
+TEST
+lifecycle:common
+lifecycle:extensions
+lifecycle:runtime
+paging:common
+room:runtime
+room:rxjava2
+core:common
+
+ANDROIDTEST
+lifecycle:extensions
+lifecycle:runtime
+room:runtime

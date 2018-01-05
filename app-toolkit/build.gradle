@@ -1,28 +1,36 @@
-/*
- * Copyright (C) 2016 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.supportRootFolder = new File(project.projectDir, "../")
-    apply from: 'buildSrc/repos.gradle'
-    apply from: 'init.gradle'
-    apply from: "buildSrc/build_dependencies.gradle"
-    repos.addMavenRepositories(repositories)
-    dependencies {
-        classpath build_libs.jacoco
-        classpath build_libs.gradle
-        classpath build_libs.kotlin.gradle_plugin
+    def doppl_gradle_version = doppl_gradle
+    repositories {
+        jcenter()
+        maven { url 'https://plugins.gradle.org/m2/' }
+        maven { url dopplMavenDeploy }
+        maven { url dopplRepo }
     }
+    dependencies {
+        classpath 'net.ltgt.gradle:gradle-apt-plugin:0.9'
+        classpath "co.doppl:gradle:${doppl_gradle_version}"
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        maven { url dopplMavenDeploy }
+        maven { url dopplRepo }
+        maven { url 'https://maven.google.com' }
+    }
+}
+
+subprojects{
+    ext.baseGroup = 'co.doppl.android.arch'
+    ext.baseJavaGroup = 'co.doppl.android.arch'
+//    version = doppl_archbeta_doppl
+//    ext.javaVersion = doppl_archbeta_java
+//    ext.skipJavaPublication = "yes"
+//    ext.archJavaVersion = doppl_archbeta_java
+    ext.dopplCoreVersionJava = doppl_core_java
+    ext.dopplCoreVersionDoppl = doppl_core_doppl
+    ext.bintrayGitUrl = 'https://github.com/doppllib/arch'
 }

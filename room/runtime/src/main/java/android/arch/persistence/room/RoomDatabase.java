@@ -30,8 +30,8 @@ import android.support.annotation.CallSuper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RestrictTo;
-import android.support.v4.util.SparseArrayCompat;
 import android.util.Log;
+import android.util.SparseArray;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -462,8 +462,8 @@ public abstract class RoomDatabase {
      * between two versions.
      */
     public static class MigrationContainer {
-        private SparseArrayCompat<SparseArrayCompat<Migration>> mMigrations =
-                new SparseArrayCompat<>();
+        private SparseArray<SparseArray<Migration>> mMigrations =
+                new SparseArray<>();
 
         /**
          * Adds the given migrations to the list of available migrations. If 2 migrations have the
@@ -480,9 +480,9 @@ public abstract class RoomDatabase {
         private void addMigration(Migration migration) {
             final int start = migration.startVersion;
             final int end = migration.endVersion;
-            SparseArrayCompat<Migration> targetMap = mMigrations.get(start);
+            SparseArray<Migration> targetMap = mMigrations.get(start);
             if (targetMap == null) {
-                targetMap = new SparseArrayCompat<>();
+                targetMap = new SparseArray<>();
                 mMigrations.put(start, targetMap);
             }
             Migration existing = targetMap.get(end);
@@ -516,7 +516,7 @@ public abstract class RoomDatabase {
                 int start, int end) {
             final int searchDirection = upgrade ? -1 : 1;
             while (upgrade ? start < end : start > end) {
-                SparseArrayCompat<Migration> targetNodes = mMigrations.get(start);
+                SparseArray<Migration> targetNodes = mMigrations.get(start);
                 if (targetNodes == null) {
                     return null;
                 }

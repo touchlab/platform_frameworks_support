@@ -27,8 +27,9 @@ import android.support.annotation.Nullable;
 import android.support.annotation.RestrictTo;
 import android.support.annotation.VisibleForTesting;
 import android.support.annotation.WorkerThread;
-import android.support.v4.util.ArrayMap;
-import android.support.v4.util.ArraySet;
+
+import android.util.ArrayMap;
+import android.util.ArraySet;
 import android.util.Log;
 
 import java.lang.ref.WeakReference;

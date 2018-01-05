@@ -14,6 +14,51 @@
  * limitations under the License.
  */
 
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+apply plugin: 'co.doppl.gradle'
+apply plugin: 'com.jfrog.bintray'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+dependencies {
+    //compile "co.doppl.lib:androidbase:$project.ext.dopplCoreVersionJava"
+    //doppl "co.doppl.lib:androidbase:$project.ext.dopplCoreVersionDoppl"
+
+    compile project(":room:common")
+    doppl project(":room:common")
+    compile project(":persistence:db-framework")
+    doppl project(":persistence:db-framework")
+    compile project(":persistence:db")
+    doppl project(":persistence:db")
+    compile project(":arch:runtime")
+    doppl project(":arch:runtime")
+
+    compileOnly project(":paging:common")
+    dopplOnly project(":paging:common")
+    compileOnly project(":lifecycle:common")
+    dopplOnly project(":lifecycle:common")
+    compileOnly project(":lifecycle:runtime")
+    dopplOnly project(":lifecycle:runtime")
+    compileOnly project(":lifecycle:extensions")
+    dopplOnly project(":lifecycle:extensions")
+
+    testCompile project(":arch:core-testing")
+    testDoppl project(":arch:core-testing")
+    testCompile "junit:junit:$doppl_junit_java"
+    testDoppl "co.doppl.junit:junit:$doppl_junit_doppl"
+    testCompile "org.mockito:mockito-core:$doppl_mockito_java"
+    testDoppl "co.doppl.org.mockito:mockito-core:$doppl_mockito_doppl"
+}
+
+group = archgroup_ROOM
+version = doppl_arch_room_doppl
+
+apply from: "$dopplSharedScriptHome/doppllibpublish.gradle"
+apply from: "$dopplSharedScriptHome/bintray.gradle"
+
+/*
 import android.support.LibraryGroups
 import android.support.LibraryVersions
 import android.support.SupportLibraryExtension
@@ -74,3 +119,4 @@ supportLibrary {
     description = "Android Room-Runtime"
     url = SupportLibraryExtension.ARCHITECTURE_URL
 }
+*/

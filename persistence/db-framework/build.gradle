@@ -14,6 +14,27 @@
  * limitations under the License.
  */
 
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+apply plugin: 'co.doppl.gradle'
+apply plugin: 'com.jfrog.bintray'
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+dependencies {
+    compile project(":persistence:db")
+    doppl project(":persistence:db")
+//    doppl "$archgroup_PERSISTENCE:db:$doppl_arch_room_doppl"
+}
+
+group = archgroup_PERSISTENCE
+version = doppl_arch_room_doppl
+
+apply from: "$dopplSharedScriptHome/doppllibpublish.gradle"
+apply from: "$dopplSharedScriptHome/bintray.gradle"
+
+/*
 import android.support.LibraryGroups
 import android.support.LibraryVersions
 import android.support.SupportLibraryExtension
@@ -44,3 +65,4 @@ supportLibrary {
     description = "The implementation of Support SQLite library using the framework code."
     url = SupportLibraryExtension.ARCHITECTURE_URL
 }
+*/

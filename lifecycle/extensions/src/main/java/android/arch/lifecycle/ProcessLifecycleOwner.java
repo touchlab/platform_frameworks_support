@@ -16,11 +16,6 @@
 
 package android.arch.lifecycle;
 
-import android.app.Activity;
-import android.app.Application;
-import android.arch.lifecycle.ReportFragment.ActivityInitializationListener;
-import android.content.Context;
-import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
@@ -68,23 +63,6 @@ public class ProcessLifecycleOwner implements LifecycleOwner {
         }
     };
 
-    private ActivityInitializationListener mInitializationListener =
-            new ActivityInitializationListener() {
-                @Override
-                public void onCreate() {
-                }
-
-                @Override
-                public void onStart() {
-                    activityStarted();
-                }
-
-                @Override
-                public void onResume() {
-                    activityResumed();
-                }
-            };
-
     private static final ProcessLifecycleOwner sInstance = new ProcessLifecycleOwner();
 
     /**
@@ -95,10 +73,6 @@ public class ProcessLifecycleOwner implements LifecycleOwner {
      */
     public static LifecycleOwner get() {
         return sInstance;
-    }
-
-    static void init(Context context) {
-        sInstance.attach(context);
     }
 
     void activityStarted() {
@@ -148,28 +122,6 @@ public class ProcessLifecycleOwner implements LifecycleOwner {
     }
 
     private ProcessLifecycleOwner() {
-    }
-
-    void attach(Context context) {
-        mHandler = new Handler();
-        mRegistry.handleLifecycleEvent(Lifecycle.Event.ON_CREATE);
-        Application app = (Application) context.getApplicationContext();
-        app.registerActivityLifecycleCallbacks(new EmptyActivityLifecycleCallbacks() {
-            @Override
-            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-                ReportFragment.get(activity).setProcessListener(mInitializationListener);
-            }
-
-            @Override
-            public void onActivityPaused(Activity activity) {
-                activityPaused();
-            }
-
-            @Override
-            public void onActivityStopped(Activity activity) {
-                activityStopped();
-            }
-        });
     }
 
     @NonNull

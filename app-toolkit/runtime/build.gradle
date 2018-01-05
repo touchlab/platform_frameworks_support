@@ -13,7 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+apply plugin: 'co.doppl.gradle'
+apply plugin: 'com.jfrog.bintray'
 
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+dependencies {
+
+    compile project(":arch:common")
+    doppl project(":arch:common")
+
+//    doppl "$archgroup_ARCH_CORE:common:$doppl_arch_release_doppl"
+}
+
+group = archgroup_ARCH_CORE
+version = doppl_arch_release_doppl
+
+apply from: "$dopplSharedScriptHome/doppllibpublish.gradle"
+apply from: "$dopplSharedScriptHome/bintray.gradle"
+
+/*
 import android.support.LibraryGroups
 import android.support.SupportLibraryExtension
 import android.support.LibraryVersions
@@ -44,3 +66,4 @@ supportLibrary {
     description = "Android Arch-Runtime"
     url = SupportLibraryExtension.ARCHITECTURE_URL
 }
+ */
