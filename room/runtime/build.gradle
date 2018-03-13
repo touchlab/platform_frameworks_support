@@ -35,8 +35,8 @@ dependencies {
     compile project(":arch:runtime")
     doppl project(":arch:runtime")
 
-    compileOnly project(":paging:common")
-    dopplOnly project(":paging:common")
+//    compileOnly project(":paging:common")
+//    dopplOnly project(":paging:common")
     compileOnly project(":lifecycle:common")
     dopplOnly project(":lifecycle:common")
     compileOnly project(":lifecycle:runtime")

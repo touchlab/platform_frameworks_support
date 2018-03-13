@@ -71,7 +71,7 @@ public interface SupportSQLiteOpenHelper {
      *
      * <p class="caution">Database upgrade may take a long time, you
      * should not call this method from the application main thread, including
-     * from {@link android.content.ContentProvider#onCreate ContentProvider.onCreate()}.
+     * from android.content.ContentProvider#onCreate ContentProvider.onCreate().
      *
      * @return a read/write database object valid until {@link #close} is called
      * @throws SQLiteException if the database cannot be opened for writing
@@ -90,7 +90,7 @@ public interface SupportSQLiteOpenHelper {
      * <p class="caution">Like {@link #getWritableDatabase}, this method may
      * take a long time to return, so you should not call it from the
      * application main thread, including from
-     * {@link android.content.ContentProvider#onCreate ContentProvider.onCreate()}.
+     * android.content.ContentProvider#onCreate ContentProvider.onCreate().
      *
      * @return a database object valid until {@link #getWritableDatabase}
      * or {@link #close} is called.
@@ -292,12 +292,12 @@ public interface SupportSQLiteOpenHelper {
          * Context to use to open or create the database.
          */
         @NonNull
-        public final Context context;
+        public final Context                          context;
         /**
          * Name of the database file, or null for an in-memory database.
          */
         @Nullable
-        public final String name;
+        public final String                           name;
         /**
          * The callback class to handle creation, upgrade and downgrade.
          */

@@ -43,8 +43,8 @@
      testDoppl "co.doppl.junit:junit:$doppl_junit_doppl"
      testCompile "org.mockito:mockito-core:$doppl_mockito_java"
      testDoppl "co.doppl.org.mockito:mockito-core:$doppl_mockito_doppl"
-     compile project(":arch:core-testing")
-     doppl project(":arch:core-testing")
+     testCompile project(":arch:core-testing")
+     testDoppl project(":arch:core-testing")
 
  }
 

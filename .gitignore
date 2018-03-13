@@ -1,7 +1,11 @@
+.DS_Store
 local.properties
 maven-repo/
 build/
 *.DS_Store
+
+doppllib.podspec
+testdoppllib.podspec
 
 # Eclipse
 .classpath
